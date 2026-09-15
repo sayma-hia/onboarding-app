@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef, useState, type ReactNode } from 'react';
-import { getOnboarding, saveOnboarding } from '../api/onboardingApi';
+import { getOnboarding, saveOnboarding } from '../../api/onboardingApi';
 import {
   OnboardingDispatchContext,
   OnboardingIOContext,

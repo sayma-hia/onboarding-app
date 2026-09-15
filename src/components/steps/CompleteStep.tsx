@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useOnboardingDispatch, useOnboardingState } from '../../workflow/useOnboarding';
+import { useOnboardingDispatch, useOnboardingState } from '../../workflow/state/useOnboarding';
 
 export function CompleteStep() {
   const { data } = useOnboardingState();

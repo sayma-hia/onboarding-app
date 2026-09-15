@@ -1,8 +1,8 @@
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { FIELD_LIMITS, fieldErrorProps, lengthSlotProps, personalDetailsErrors } from '../../workflow/fieldErrors';
-import { useStepErrors } from '../../workflow/useStepErrors';
-import { useStepField } from '../../workflow/useStepField';
+import { useStepErrors } from '../../workflow/state/useStepErrors';
+import { useStepField } from '../../workflow/state/useStepField';
 
 export function PersonalDetailsStep() {
   const [jobTitle, setJobTitle] = useStepField('personalDetails', 'jobTitle');

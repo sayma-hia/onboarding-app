@@ -1,5 +1,5 @@
 import type { OnboardingAction } from './onboardingReducer';
-import type { OnboardingFormData } from './types';
+import type { OnboardingFormData } from '../types';
 import { useOnboardingDispatch, useOnboardingState } from './useOnboarding';
 
 // binds a single field of a single step's data to the shared state,

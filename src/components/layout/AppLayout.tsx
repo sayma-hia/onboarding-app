@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import type { ReactNode } from 'react';
 import { resolvePath, steps } from '../../workflow/steps';
-import { useOnboardingState } from '../../workflow/useOnboarding';
+import { useOnboardingState } from '../../workflow/state/useOnboarding';
 import { NavigationBar } from './NavigationBar';
 import { SaveStatusText } from './SaveStatusText';
 

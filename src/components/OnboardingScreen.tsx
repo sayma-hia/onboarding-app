@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import type { StepId } from '../workflow/types';
-import { useOnboardingState } from '../workflow/useOnboarding';
+import { useOnboardingState } from '../workflow/state/useOnboarding';
 import { AppLayout } from './layout/AppLayout';
 import { AccountTypeStep } from './steps/AccountTypeStep';
 import { CompanyDetailsStep } from './steps/CompanyDetailsStep';

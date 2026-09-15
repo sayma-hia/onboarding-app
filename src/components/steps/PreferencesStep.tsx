@@ -1,7 +1,7 @@
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
-import { useStepField } from '../../workflow/useStepField';
+import { useStepField } from '../../workflow/state/useStepField';
 
 export function PreferencesStep() {
   const [newsletter, setNewsletter] = useStepField('preferences', 'newsletter');
