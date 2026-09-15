@@ -7,3 +7,10 @@ export const OnboardingStateContext = createContext<OnboardingState | undefined>
 export const OnboardingDispatchContext = createContext<Dispatch<OnboardingAction> | undefined>(
   undefined,
 );
+
+// small escape hatch for the imperative bits the reducer can't own,
+// like retrying a failed initial load
+export interface OnboardingIO {
+  retryLoad: () => void;
+}
+export const OnboardingIOContext = createContext<OnboardingIO | undefined>(undefined);
