@@ -1,12 +1,13 @@
-import { delay } from './delay';
-
-// GET /api/company-types - the one screen that loads its options from
-// an API instead of being hardcoded.
+// GET /api/company-types - the one screen that loads its options from an
+// API instead of being hardcoded. Intercepted by MSW; see mocks/handlers.ts
+// for the simulated latency and the deliberate first-call failure.
 export interface CompanyType {
   id: string;
   label: string;
 }
 
+// canonical list, also served by the mock handler and used here on the
+// client to resolve a selected id back to its label on the review screen
 export const COMPANY_TYPES: CompanyType[] = [
   { id: 'llc', label: 'LLC' },
   { id: 'corporation', label: 'Corporation' },
@@ -15,15 +16,10 @@ export const COMPANY_TYPES: CompanyType[] = [
   { id: 'nonprofit', label: 'Nonprofit' },
 ];
 
-// fails on the first call of each page load so the loading -> error ->
-// retry -> success path is always reachable, then behaves after that
-let hasFailedOnce = false;
-
 export async function fetchCompanyTypes(): Promise<CompanyType[]> {
-  await delay(700);
-  if (!hasFailedOnce) {
-    hasFailedOnce = true;
+  const response = await fetch('/api/company-types');
+  if (!response.ok) {
     throw new Error('Could not load company types.');
   }
-  return COMPANY_TYPES;
+  return response.json();
 }
