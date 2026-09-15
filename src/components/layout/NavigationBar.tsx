@@ -6,10 +6,11 @@ import { useOnboardingDispatch, useOnboardingState } from '../../workflow/useOnb
 // reveals the field errors, instead of leaving the user staring at a
 // disabled button with no explanation
 export function NavigationBar() {
-  const { history } = useOnboardingState();
+  const { currentStep, history } = useOnboardingState();
   const dispatch = useOnboardingDispatch();
 
   const canGoBack = history.length > 0;
+  const nextLabel = currentStep === 'review' ? 'Submit' : 'Next';
 
   return (
     <Stack direction="row" spacing={2}>
@@ -17,7 +18,7 @@ export function NavigationBar() {
         Back
       </Button>
       <Button variant="contained" onClick={() => dispatch({ type: 'GO_NEXT' })}>
-        Next
+        {nextLabel}
       </Button>
     </Stack>
   );

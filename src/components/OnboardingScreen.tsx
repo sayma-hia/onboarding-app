@@ -1,19 +1,15 @@
-import Typography from '@mui/material/Typography';
 import type { ComponentType } from 'react';
 import type { StepId } from '../workflow/types';
 import { useOnboardingState } from '../workflow/useOnboarding';
 import { AppLayout } from './layout/AppLayout';
 import { AccountTypeStep } from './steps/AccountTypeStep';
 import { CompanyDetailsStep } from './steps/CompanyDetailsStep';
+import { CompleteStep } from './steps/CompleteStep';
 import { PersonalDetailsStep } from './steps/PersonalDetailsStep';
 import { PersonalInformationStep } from './steps/PersonalInformationStep';
 import { PreferencesStep } from './steps/PreferencesStep';
+import { ReviewStep } from './steps/ReviewStep';
 import { TeamSizeStep } from './steps/TeamSizeStep';
-
-// review and complete get their own screens in a follow-up branch
-function ComingSoon({ label }: { label: string }) {
-  return <Typography color="text.secondary">{label} screen coming soon.</Typography>;
-}
 
 const stepScreens: Record<StepId, ComponentType> = {
   personalInfo: PersonalInformationStep,
@@ -22,8 +18,8 @@ const stepScreens: Record<StepId, ComponentType> = {
   companyDetails: CompanyDetailsStep,
   teamSize: TeamSizeStep,
   preferences: PreferencesStep,
-  review: () => <ComingSoon label="Review" />,
-  complete: () => <ComingSoon label="Complete" />,
+  review: ReviewStep,
+  complete: CompleteStep,
 };
 
 export function OnboardingScreen() {

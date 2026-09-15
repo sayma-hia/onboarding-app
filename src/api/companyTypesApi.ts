@@ -7,7 +7,7 @@ export interface CompanyType {
   label: string;
 }
 
-const COMPANY_TYPES: CompanyType[] = [
+export const COMPANY_TYPES: CompanyType[] = [
   { id: 'llc', label: 'LLC' },
   { id: 'corporation', label: 'Corporation' },
   { id: 'partnership', label: 'Partnership' },
