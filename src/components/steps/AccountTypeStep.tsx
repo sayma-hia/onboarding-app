@@ -6,13 +6,12 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { accountTypeErrors } from '../../workflow/fieldErrors';
 import type { AccountType } from '../../workflow/types';
-import { useOnboardingState } from '../../workflow/useOnboarding';
+import { useStepErrors } from '../../workflow/useStepErrors';
 import { useStepField } from '../../workflow/useStepField';
 
 export function AccountTypeStep() {
   const [type, setType] = useStepField('accountType', 'type');
-  const { data, attemptedAdvance } = useOnboardingState();
-  const errors = accountTypeErrors(data);
+  const { errors, attemptedAdvance } = useStepErrors(accountTypeErrors);
   const showError = attemptedAdvance && !!errors.type;
 
   return (

@@ -1,15 +1,14 @@
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-import { teamSizeErrors } from '../../workflow/fieldErrors';
-import { useOnboardingState } from '../../workflow/useOnboarding';
+import { fieldErrorProps, teamSizeErrors } from '../../workflow/fieldErrors';
+import { useStepErrors } from '../../workflow/useStepErrors';
 import { useStepField } from '../../workflow/useStepField';
 
 const TEAM_SIZES = ['1-10', '11-50', '51-200', '201-500', '500+'];
 
 export function TeamSizeStep() {
   const [size, setSize] = useStepField('teamSize', 'size');
-  const { data, attemptedAdvance } = useOnboardingState();
-  const errors = teamSizeErrors(data);
+  const { errors, attemptedAdvance } = useStepErrors(teamSizeErrors);
 
   return (
     <TextField
@@ -17,10 +16,9 @@ export function TeamSizeStep() {
       label="Team size"
       value={size}
       onChange={(e) => setSize(e.target.value)}
-      error={attemptedAdvance && !!errors.size}
-      helperText={attemptedAdvance ? errors.size : undefined}
       required
       fullWidth
+      {...fieldErrorProps(attemptedAdvance, errors.size)}
     >
       {TEAM_SIZES.map((option) => (
         <MenuItem key={option} value={option}>

@@ -1,15 +1,12 @@
 import {
   accountTypeErrors,
   companyDetailsErrors,
+  hasNoErrors,
   personalDetailsErrors,
   personalInfoErrors,
   teamSizeErrors,
 } from './fieldErrors';
 import type { OnboardingFormData, StepId } from './types';
-
-function hasNoErrors(errors: object): boolean {
-  return Object.keys(errors).length === 0;
-}
 
 // central place that owns "what comes next" and "can we leave this step".
 // screens themselves never decide where to navigate - they just read/write

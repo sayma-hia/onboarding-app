@@ -5,8 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { companyDetailsErrors } from '../../workflow/fieldErrors';
-import { useOnboardingState } from '../../workflow/useOnboarding';
+import { FIELD_LIMITS, companyDetailsErrors, fieldErrorProps, lengthSlotProps } from '../../workflow/fieldErrors';
+import { useStepErrors } from '../../workflow/useStepErrors';
 import { useStepField } from '../../workflow/useStepField';
 import { useCompanyTypes } from './useCompanyTypes';
 
@@ -14,8 +14,7 @@ export function CompanyDetailsStep() {
   const [companyName, setCompanyName] = useStepField('companyDetails', 'companyName');
   const [companyType, setCompanyType] = useStepField('companyDetails', 'companyType');
   const { status, companyTypes, error, retry } = useCompanyTypes();
-  const { data, attemptedAdvance } = useOnboardingState();
-  const errors = companyDetailsErrors(data);
+  const { errors, attemptedAdvance } = useStepErrors(companyDetailsErrors);
 
   return (
     <Stack spacing={3}>
@@ -23,10 +22,10 @@ export function CompanyDetailsStep() {
         label="Company name"
         value={companyName}
         onChange={(e) => setCompanyName(e.target.value)}
-        error={attemptedAdvance && !!errors.companyName}
-        helperText={attemptedAdvance ? errors.companyName : undefined}
         required
         fullWidth
+        {...lengthSlotProps(FIELD_LIMITS.companyName)}
+        {...fieldErrorProps(attemptedAdvance, errors.companyName)}
       />
 
       {status === 'loading' && (
@@ -57,10 +56,9 @@ export function CompanyDetailsStep() {
           label="Company type"
           value={companyType}
           onChange={(e) => setCompanyType(e.target.value)}
-          error={attemptedAdvance && !!errors.companyType}
-          helperText={attemptedAdvance ? errors.companyType : undefined}
           required
           fullWidth
+          {...fieldErrorProps(attemptedAdvance, errors.companyType)}
         >
           {companyTypes.map((option) => (
             <MenuItem key={option.id} value={option.id}>

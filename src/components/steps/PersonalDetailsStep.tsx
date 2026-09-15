@@ -1,14 +1,13 @@
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { personalDetailsErrors } from '../../workflow/fieldErrors';
-import { useOnboardingState } from '../../workflow/useOnboarding';
+import { FIELD_LIMITS, fieldErrorProps, lengthSlotProps, personalDetailsErrors } from '../../workflow/fieldErrors';
+import { useStepErrors } from '../../workflow/useStepErrors';
 import { useStepField } from '../../workflow/useStepField';
 
 export function PersonalDetailsStep() {
   const [jobTitle, setJobTitle] = useStepField('personalDetails', 'jobTitle');
   const [phone, setPhone] = useStepField('personalDetails', 'phone');
-  const { data, attemptedAdvance } = useOnboardingState();
-  const errors = personalDetailsErrors(data);
+  const { errors, attemptedAdvance } = useStepErrors(personalDetailsErrors);
 
   return (
     <Stack spacing={3}>
@@ -16,16 +15,18 @@ export function PersonalDetailsStep() {
         label="Job title"
         value={jobTitle}
         onChange={(e) => setJobTitle(e.target.value)}
-        error={attemptedAdvance && !!errors.jobTitle}
-        helperText={attemptedAdvance ? errors.jobTitle : undefined}
         required
         fullWidth
+        {...lengthSlotProps(FIELD_LIMITS.jobTitle)}
+        {...fieldErrorProps(attemptedAdvance, errors.jobTitle)}
       />
       <TextField
         label="Phone (optional)"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
         fullWidth
+        {...lengthSlotProps(FIELD_LIMITS.phone)}
+        {...fieldErrorProps(attemptedAdvance, errors.phone)}
       />
     </Stack>
   );
