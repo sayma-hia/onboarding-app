@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { OnboardingGate } from './components/OnboardingGate';
 import { OnboardingScreen } from './components/OnboardingScreen';
-import { OnboardingProvider } from './workflow/OnboardingContext';
+import { OnboardingProvider } from './workflow/state/OnboardingContext';
 
 function App() {
   return (

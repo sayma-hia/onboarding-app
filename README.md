@@ -90,6 +90,14 @@ async orchestration between steps (say, a step whose validity depends on a serve
 check), I'd probably reach for something like Zustand or XState at that point — but for
 what's here, that would be over-building it.
 
+**Folder-wise**, `src/workflow/` splits into two layers: `steps.ts`, `types.ts`,
+`validation.ts`, and `fieldErrors.ts` at the top level are the pure domain model — no
+React, no notion of "now," just data in and an answer out, which is also why they're the
+easiest things to unit test. Everything that's actually *stateful* (the reducer, the
+contexts, and the hooks that read them) lives in `src/workflow/state/`. The split makes
+it obvious at a glance which files you can reason about in isolation and which ones only
+make sense wired into a component tree.
+
 ### Validation
 
 This went through a couple of iterations. Originally the Next button was just disabled
@@ -182,7 +190,7 @@ in older MUI examples.
 npm test
 ```
 
-68 tests across `src/workflow/*.test.ts`, covering the reducer (navigation, the
+68 tests across `src/workflow/**/*.test.ts`, covering the reducer (navigation, the
 branch-switch cleanup in both directions, `GO_TO`/`GO_BACK` history, the load/save
 lifecycle, `RESET`), the step graph's `next()`/`isValid()`/`resolvePath()`, and the
 validation functions. This is where I put the testing effort — it's pure logic with no

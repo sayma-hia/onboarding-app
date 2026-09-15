@@ -6,8 +6,8 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { accountTypeErrors } from '../../workflow/fieldErrors';
 import type { AccountType } from '../../workflow/types';
-import { useStepErrors } from '../../workflow/useStepErrors';
-import { useStepField } from '../../workflow/useStepField';
+import { useStepErrors } from '../../workflow/state/useStepErrors';
+import { useStepField } from '../../workflow/state/useStepField';
 
 export function AccountTypeStep() {
   const [type, setType] = useStepField('accountType', 'type');

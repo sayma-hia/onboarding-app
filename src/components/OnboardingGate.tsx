@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import type { ReactNode } from 'react';
-import { useOnboardingIO, useOnboardingState } from '../workflow/useOnboarding';
+import { useOnboardingIO, useOnboardingState } from '../workflow/state/useOnboarding';
 
 // gates the app on the initial load of saved progress - shows a spinner,
 // then either the app or a retryable error, never a blank/broken screen

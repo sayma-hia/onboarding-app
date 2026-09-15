@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { COMPANY_TYPES } from '../../api/companyTypesApi';
 import type { StepId } from '../../workflow/types';
-import { useOnboardingDispatch, useOnboardingState } from '../../workflow/useOnboarding';
+import { useOnboardingDispatch, useOnboardingState } from '../../workflow/state/useOnboarding';
 
 interface ReviewField {
   label: string;

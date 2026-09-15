@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { useOnboardingDispatch, useOnboardingState } from '../../workflow/useOnboarding';
+import { useOnboardingDispatch, useOnboardingState } from '../../workflow/state/useOnboarding';
 
 // Next stays clickable even when the step is invalid - clicking it is what
 // reveals the field errors, instead of leaving the user staring at a

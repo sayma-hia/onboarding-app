@@ -1,6 +1,6 @@
-import { steps } from './steps';
-import { initialFormData } from './types';
-import type { OnboardingFormData, StepId } from './types';
+import { steps } from '../steps';
+import { initialFormData } from '../types';
+import type { OnboardingFormData, StepId } from '../types';
 
 export type LoadStatus = 'idle' | 'loading' | 'loaded' | 'error';
 export type SaveStatus = 'idle' | 'saving' | 'saved' | 'error';

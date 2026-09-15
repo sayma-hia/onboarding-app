@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography';
-import { useOnboardingState } from '../../workflow/useOnboarding';
+import { useOnboardingState } from '../../workflow/state/useOnboarding';
 
 export function SaveStatusText() {
   const { saveStatus, saveError } = useOnboardingState();

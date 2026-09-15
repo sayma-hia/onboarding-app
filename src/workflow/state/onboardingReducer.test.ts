@@ -5,7 +5,7 @@ import {
   type HydratedSnapshot,
   type OnboardingState,
 } from './onboardingReducer';
-import { initialFormData } from './types';
+import { initialFormData } from '../types';
 
 const validPersonalInfo = { firstName: 'Sayma', lastName: 'Hia', email: 'sayma@example.com' };
 

@@ -1,4 +1,4 @@
-import type { OnboardingFormData } from './types';
+import type { OnboardingFormData } from '../types';
 import { useOnboardingState } from './useOnboarding';
 
 // every step screen needs the same two things to render its own

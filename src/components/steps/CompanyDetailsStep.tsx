@@ -6,8 +6,8 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { FIELD_LIMITS, companyDetailsErrors, fieldErrorProps, lengthSlotProps } from '../../workflow/fieldErrors';
-import { useStepErrors } from '../../workflow/useStepErrors';
-import { useStepField } from '../../workflow/useStepField';
+import { useStepErrors } from '../../workflow/state/useStepErrors';
+import { useStepField } from '../../workflow/state/useStepField';
 import { useCompanyTypes } from './useCompanyTypes';
 
 export function CompanyDetailsStep() {
