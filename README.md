@@ -115,14 +115,23 @@ The rules themselves are layered:
 
 ### Mock API and persistence
 
-`src/api/onboardingApi.ts` mocks `GET`/`PUT /api/onboarding/:id` with `localStorage`
-standing in for a database, plus an artificial delay so the loading state is real and
-not just a flash. It also fails at a low random rate on purpose, so the save-error UI
-actually gets exercised instead of being dead code nobody ever sees run.
-`companyTypesApi.ts` (the one async-loaded screen the brief asks for) is more
-deliberate about it — it fails on the *first* call of every page load, guaranteed, so
-the loading → error → retry → success sequence is always reachable, not just possible if
-you get unlucky.
+The API is mocked with **MSW** (Mock Service Worker). `src/api/onboardingApi.ts` and
+`companyTypesApi.ts` make plain `fetch()` calls to `/api/onboarding/:id` and
+`/api/company-types` — nothing in that code knows it's being mocked. MSW's Service
+Worker intercepts those requests in the browser before they hit the network, so the
+Network tab shows real GET/PUT requests with real status codes, not just resolved
+promises. `src/mocks/handlers.ts` is where the actual "server" behavior lives:
+`localStorage` stands in for a database, there's an artificial delay so the loading
+state is real and not just a flash, and the onboarding endpoints fail at a low random
+rate on purpose, so the save-error UI actually gets exercised instead of being dead code
+nobody ever sees run. `/api/company-types` (the one async-loaded screen the brief asks
+for) is more deliberate about it — it fails on the *first* call of every page load,
+guaranteed, so the loading → error → retry → success sequence is always reachable, not
+just possible if you get unlucky.
+
+Because the client-side API modules only ever talk in terms of `fetch()` and plain
+functions, swapping MSW out for a real backend later means deleting `src/mocks/` and
+changing zero call sites — the boundary was already there.
 
 A session id gets generated once and stored in `localStorage`, so a refresh reuses the
 same record instead of starting over — that's what satisfies "refreshing shouldn't lose
