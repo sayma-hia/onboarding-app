@@ -9,6 +9,9 @@ export interface OnboardingState {
   currentStep: StepId;
   history: StepId[];
   data: OnboardingFormData;
+  // true once the user has tried to leave the current step while it was
+  // invalid - screens use this to decide when to start showing field errors
+  attemptedAdvance: boolean;
   loadStatus: LoadStatus;
   loadError: string | null;
   saveStatus: SaveStatus;
@@ -19,6 +22,7 @@ export const initialOnboardingState: OnboardingState = {
   currentStep: 'personalInfo',
   history: [],
   data: initialFormData,
+  attemptedAdvance: false,
   loadStatus: 'idle',
   loadError: null,
   saveStatus: 'idle',
@@ -89,12 +93,13 @@ export function onboardingReducer(
 
     case 'GO_NEXT': {
       const current = steps[state.currentStep];
-      if (!current.isValid(state.data)) return state;
+      if (!current.isValid(state.data)) return { ...state, attemptedAdvance: true };
       const next = current.next(state.data);
       return {
         ...state,
         currentStep: next,
         history: [...state.history, state.currentStep],
+        attemptedAdvance: false,
       };
     }
 
@@ -105,6 +110,7 @@ export function onboardingReducer(
         ...state,
         currentStep: previous,
         history: state.history.slice(0, -1),
+        attemptedAdvance: false,
       };
     }
 
@@ -113,6 +119,7 @@ export function onboardingReducer(
         ...state,
         currentStep: action.step,
         history: [...state.history, state.currentStep],
+        attemptedAdvance: false,
       };
 
     case 'LOAD_START':

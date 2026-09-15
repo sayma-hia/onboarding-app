@@ -1,5 +1,15 @@
+import {
+  accountTypeErrors,
+  companyDetailsErrors,
+  personalDetailsErrors,
+  personalInfoErrors,
+  teamSizeErrors,
+} from './fieldErrors';
 import type { OnboardingFormData, StepId } from './types';
-import { isNonEmpty, isValidEmail } from './validation';
+
+function hasNoErrors(errors: object): boolean {
+  return Object.keys(errors).length === 0;
+}
 
 // central place that owns "what comes next" and "can we leave this step".
 // screens themselves never decide where to navigate - they just read/write
@@ -16,37 +26,32 @@ export const steps: Record<StepId, StepDefinition> = {
     id: 'personalInfo',
     title: 'Personal Information',
     next: () => 'accountType',
-    isValid: (data) =>
-      isNonEmpty(data.personalInfo.firstName) &&
-      isNonEmpty(data.personalInfo.lastName) &&
-      isValidEmail(data.personalInfo.email),
+    isValid: (data) => hasNoErrors(personalInfoErrors(data)),
   },
   accountType: {
     id: 'accountType',
     title: 'Account Type',
     next: (data) =>
       data.accountType.type === 'business' ? 'companyDetails' : 'personalDetails',
-    isValid: (data) => data.accountType.type !== '',
+    isValid: (data) => hasNoErrors(accountTypeErrors(data)),
   },
   personalDetails: {
     id: 'personalDetails',
     title: 'Personal Details',
     next: () => 'preferences',
-    isValid: (data) => isNonEmpty(data.personalDetails.jobTitle),
+    isValid: (data) => hasNoErrors(personalDetailsErrors(data)),
   },
   companyDetails: {
     id: 'companyDetails',
     title: 'Company Details',
     next: () => 'teamSize',
-    isValid: (data) =>
-      isNonEmpty(data.companyDetails.companyName) &&
-      isNonEmpty(data.companyDetails.companyType),
+    isValid: (data) => hasNoErrors(companyDetailsErrors(data)),
   },
   teamSize: {
     id: 'teamSize',
     title: 'Team Size',
     next: () => 'preferences',
-    isValid: (data) => isNonEmpty(data.teamSize.size),
+    isValid: (data) => hasNoErrors(teamSizeErrors(data)),
   },
   preferences: {
     id: 'preferences',
