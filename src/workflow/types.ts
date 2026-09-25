@@ -1,13 +1,14 @@
 // step ids - add a new id here when a new screen is introduced
 export type StepId =
-  | 'personalInfo'
-  | 'accountType'
-  | 'personalDetails'
-  | 'companyDetails'
-  | 'teamSize'
-  | 'preferences'
-  | 'review'
-  | 'complete';
+  | "personalInfo"
+  | "accountType"
+  | "personalDetails"
+  | "companyDetails"
+  | "officeDetails"
+  | "teamSize"
+  | "preferences"
+  | "review"
+  | "complete";
 
 export interface PersonalInfoData {
   firstName: string;
@@ -15,7 +16,7 @@ export interface PersonalInfoData {
   email: string;
 }
 
-export type AccountType = 'individual' | 'business' | '';
+export type AccountType = "individual" | "business" | "";
 
 export interface AccountTypeData {
   type: AccountType;
@@ -29,6 +30,11 @@ export interface PersonalDetailsData {
 export interface CompanyDetailsData {
   companyName: string;
   companyType: string;
+}
+
+export interface OfficeDetailsData {
+  officeName: string;
+  officeAddress: string;
 }
 
 export interface TeamSizeData {
@@ -45,15 +51,17 @@ export interface OnboardingFormData {
   accountType: AccountTypeData;
   personalDetails: PersonalDetailsData;
   companyDetails: CompanyDetailsData;
+  officeDetails: OfficeDetailsData;
   teamSize: TeamSizeData;
   preferences: PreferencesData;
 }
 
 export const initialFormData: OnboardingFormData = {
-  personalInfo: { firstName: '', lastName: '', email: '' },
-  accountType: { type: '' },
-  personalDetails: { jobTitle: '', phone: '' },
-  companyDetails: { companyName: '', companyType: '' },
-  teamSize: { size: '' },
+  personalInfo: { firstName: "", lastName: "", email: "" },
+  accountType: { type: "" },
+  personalDetails: { jobTitle: "", phone: "" },
+  companyDetails: { companyName: "", companyType: "" },
+  officeDetails: { officeName: "", officeAddress: "" },
+  teamSize: { size: "" },
   preferences: { newsletter: false, productUpdates: false },
 };

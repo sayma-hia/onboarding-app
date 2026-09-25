@@ -1,5 +1,10 @@
-import type { OnboardingFormData } from './types';
-import { isNonEmpty, isValidEmail, lengthError, type LengthLimits } from './validation';
+import type { OnboardingFormData } from "./types";
+import {
+  isNonEmpty,
+  isValidEmail,
+  lengthError,
+  type LengthLimits,
+} from "./validation";
 
 // one place that owns the actual error copy per field, so steps.ts's
 // isValid() and each screen's inline messages can never drift apart
@@ -41,14 +46,24 @@ export const FIELD_LIMITS = {
   jobTitle: { min: 2, max: 100 },
   phone: { min: 7, max: 20 },
   companyName: { min: 2, max: 100 },
+  officeName: { min: 2, max: 100 },
+  officeAddress: { min: 2, max: 100 },
 } as const satisfies Record<string, LengthLimits>;
 
-function requiredTextError(label: string, value: string, limits: LengthLimits): string | undefined {
+function requiredTextError(
+  label: string,
+  value: string,
+  limits: LengthLimits
+): string | undefined {
   if (!isNonEmpty(value)) return `${label} is required`;
   return lengthError(label, value, limits);
 }
 
-function optionalTextError(label: string, value: string, limits: LengthLimits): string | undefined {
+function optionalTextError(
+  label: string,
+  value: string,
+  limits: LengthLimits
+): string | undefined {
   if (!isNonEmpty(value)) return undefined;
   return lengthError(label, value, limits);
 }
@@ -59,18 +74,29 @@ export interface PersonalInfoErrors {
   email?: string;
 }
 
-export function personalInfoErrors(data: OnboardingFormData): PersonalInfoErrors {
+export function personalInfoErrors(
+  data: OnboardingFormData
+): PersonalInfoErrors {
   const errors: PersonalInfoErrors = {};
   const { firstName, lastName, email } = data.personalInfo;
 
-  const firstNameError = requiredTextError('First name', firstName, FIELD_LIMITS.firstName);
+  const firstNameError = requiredTextError(
+    "First name",
+    firstName,
+    FIELD_LIMITS.firstName
+  );
   if (firstNameError) errors.firstName = firstNameError;
 
-  const lastNameError = requiredTextError('Last name', lastName, FIELD_LIMITS.lastName);
+  const lastNameError = requiredTextError(
+    "Last name",
+    lastName,
+    FIELD_LIMITS.lastName
+  );
   if (lastNameError) errors.lastName = lastNameError;
 
-  let emailError = requiredTextError('Email', email, FIELD_LIMITS.email);
-  if (!emailError && !isValidEmail(email)) emailError = 'Enter a valid email address';
+  let emailError = requiredTextError("Email", email, FIELD_LIMITS.email);
+  if (!emailError && !isValidEmail(email))
+    emailError = "Enter a valid email address";
   if (emailError) errors.email = emailError;
 
   return errors;
@@ -81,7 +107,7 @@ export interface AccountTypeErrors {
 }
 
 export function accountTypeErrors(data: OnboardingFormData): AccountTypeErrors {
-  return data.accountType.type === '' ? { type: 'Select an account type' } : {};
+  return data.accountType.type === "" ? { type: "Select an account type" } : {};
 }
 
 export interface PersonalDetailsErrors {
@@ -89,14 +115,20 @@ export interface PersonalDetailsErrors {
   phone?: string;
 }
 
-export function personalDetailsErrors(data: OnboardingFormData): PersonalDetailsErrors {
+export function personalDetailsErrors(
+  data: OnboardingFormData
+): PersonalDetailsErrors {
   const errors: PersonalDetailsErrors = {};
   const { jobTitle, phone } = data.personalDetails;
 
-  const jobTitleError = requiredTextError('Job title', jobTitle, FIELD_LIMITS.jobTitle);
+  const jobTitleError = requiredTextError(
+    "Job title",
+    jobTitle,
+    FIELD_LIMITS.jobTitle
+  );
   if (jobTitleError) errors.jobTitle = jobTitleError;
 
-  const phoneError = optionalTextError('Phone', phone, FIELD_LIMITS.phone);
+  const phoneError = optionalTextError("Phone", phone, FIELD_LIMITS.phone);
   if (phoneError) errors.phone = phoneError;
 
   return errors;
@@ -107,15 +139,62 @@ export interface CompanyDetailsErrors {
   companyType?: string;
 }
 
-export function companyDetailsErrors(data: OnboardingFormData): CompanyDetailsErrors {
+export function companyDetailsErrors(
+  data: OnboardingFormData
+): CompanyDetailsErrors {
   const errors: CompanyDetailsErrors = {};
   const { companyName, companyType } = data.companyDetails;
 
-  const companyNameError = requiredTextError('Company name', companyName, FIELD_LIMITS.companyName);
+  const companyNameError = requiredTextError(
+    "Company name",
+    companyName,
+    FIELD_LIMITS.companyName
+  );
   if (companyNameError) errors.companyName = companyNameError;
 
-  if (!isNonEmpty(companyType)) errors.companyType = 'Company type is required';
+  if (!isNonEmpty(companyType)) errors.companyType = "Company type is required";
 
+  return errors;
+}
+export function officeNameError(value: string): string | undefined {
+  if (!isNonEmpty(value)) return "Office name is required";
+  return lengthError("Office name", value, FIELD_LIMITS.officeName);
+}
+export function officeAddressError(value: string): string | undefined {
+  if (!isNonEmpty(value)) return "Office address is required";
+  return lengthError("Office address", value, FIELD_LIMITS.officeAddress);
+}
+// export function officeDetailsErrors(
+//   data: OnboardingFormData
+// ): OfficeDetailsData {
+//   console.log(officeNameError(data.officeDetails.officeName));
+//   return {
+//     officeName: officeNameError(data.officeDetails.officeName),
+//     officeAddress: officeAddressError(data.officeDetails.officeAddress),
+//   };
+// }
+export interface officeDetailsErrors {
+  officeName?: string;
+  officeAddress?: string;
+}
+export function officeDetailsErrors(
+  data: OnboardingFormData
+): officeDetailsErrors {
+  const errors: officeDetailsErrors = {};
+  const { officeName, officeAddress } = data.officeDetails;
+
+  const officeNameError = requiredTextError(
+    "Office Name",
+    officeName,
+    FIELD_LIMITS.officeName
+  );
+  const officeAddressError = requiredTextError(
+    "Office Address",
+    officeAddress,
+    FIELD_LIMITS.officeAddress
+  );
+  if (officeNameError) errors.officeName = officeNameError;
+  if (officeAddressError) errors.officeAddress = officeAddressError;
   return errors;
 }
 
@@ -124,5 +203,5 @@ export interface TeamSizeErrors {
 }
 
 export function teamSizeErrors(data: OnboardingFormData): TeamSizeErrors {
-  return isNonEmpty(data.teamSize.size) ? {} : { size: 'Select a team size' };
+  return isNonEmpty(data.teamSize.size) ? {} : { size: "Select a team size" };
 }
